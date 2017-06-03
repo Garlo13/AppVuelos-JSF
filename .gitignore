@@ -1,0 +1,9 @@
+build/*
+dist/*
+nbproject/private/*
+/ExamenVuelosJSF-ejb/build/
+/ExamenVuelosJSF-war/build/
+/ExamenVuelosJSF-ejb/dist/
+/ExamenVuelosJSF-war/dist/
+/ExamenVuelosJSF-war/nbproject/private/
+/ExamenVuelosJSF-ejb/nbproject/private/

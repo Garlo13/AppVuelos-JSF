@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:dataTable id="tabla" value="#{vueloBean.listaVuelos}" var="vuelo">
+                <h:column>
+                    <f:facet name="header">
+                        FLIGHT ID
+                    </f:facet>
+                    #{vuelo.flightPK.flightId} 
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        SEGMENT NUMBER
+                    </f:facet>
+                    #{vuelo.flightPK.segmentNumber}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        ORIG. AIRPORT
+                    </f:facet>
+                    <h:panelGroup rendered="#{!vueloBean.esVueloAEditar(vuelo)}">
+                        #{vuelo.origAirport.cityName}
+                    </h:panelGroup>
+                    <h:selectOneMenu rendered="#{vueloBean.esVueloAEditar(vuelo)}" value="#{modificarVueloBean.ciudadOrigenSeleccionada}">
+                        <f:selectItems value="#{vueloBean.listaCiudades}" var="ciudad"
+                                       itemValue="#{ciudad.airport}" itemLabel="#{ciudad.cityName}"/>
+                    </h:selectOneMenu>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        DEPART TIME
+                    </f:facet>
+                    <h:outputText rendered="#{!vueloBean.esVueloAEditar(vuelo)}" value="#{vuelo.departTime}">
+                        <f:convertDateTime pattern="HH:mm:ss"/>
+                    </h:outputText>
+                    <h:inputText rendered="#{vueloBean.esVueloAEditar(vuelo)}" p:type="time" value="#{vueloBean.vuelo.departTime}">
+                        <f:convertDateTime type="time" pattern="HH:mm"/>
+                    </h:inputText><br/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        DEST. AIRPORT
+                    </f:facet>
+                    <h:panelGroup rendered="#{!vueloBean.esVueloAEditar(vuelo)}">
+                        #{vuelo.destAirport.cityName}
+                    </h:panelGroup>
+                    <h:selectOneMenu rendered="#{vueloBean.esVueloAEditar(vuelo)}" value="#{modificarVueloBean.ciudadDestinoSeleccionada}">
+                        <f:selectItems value="#{vueloBean.listaCiudades}" var="ciudad"
+                                       itemValue="#{ciudad.airport}" itemLabel="#{ciudad.cityName}"/>
+                    </h:selectOneMenu>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        ARRIVE TIME
+                    </f:facet>
+                    <h:outputText rendered="#{!vueloBean.esVueloAEditar(vuelo)}" value="#{vuelo.arriveTime}">
+                        <f:convertDateTime pattern="HH:mm:ss"/>
+                    </h:outputText>
+                    <h:inputText rendered="#{vueloBean.esVueloAEditar(vuelo)}" p:type="time" value="#{vueloBean.vuelo.arriveTime}">
+                        <f:convertDateTime type="time" pattern="HH:mm"/>
+                    </h:inputText><br/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        MEAL
+                    </f:facet>
+                    <h:panelGroup rendered="#{!vueloBean.esVueloAEditar(vuelo)}" >
+                        #{vuelo.meal}   
+                    </h:panelGroup>
+                    <h:selectOneMenu rendered="#{vueloBean.esVueloAEditar(vuelo)}" value="#{vueloBean.vuelo.meal}">
+                        <f:selectItem itemValue='S' itemLabel="S"/>
+                        <f:selectItem itemValue='B' itemLabel="B"/>
+                        <f:selectItem itemValue='L' itemLabel="L"/>
+                        <f:selectItem itemValue='D' itemLabel="D"/>
+                    </h:selectOneMenu>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        FLYING TIME
+                    </f:facet>
+                    <h:panelGroup rendered="#{!vueloBean.esVueloAEditar(vuelo)}" >
+                        #{vuelo.flyingTime}  
+                    </h:panelGroup>
+                    <h:inputText rendered="#{vueloBean.esVueloAEditar(vuelo)}" value="#{vueloBean.vuelo.flyingTime}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        MILES
+                    </f:facet>
+                    <h:panelGroup rendered="#{!vueloBean.esVueloAEditar(vuelo)}" >
+                        #{vuelo.miles} 
+                    </h:panelGroup>
+                    <h:inputText rendered="#{vueloBean.esVueloAEditar(vuelo)}" value="#{vueloBean.vuelo.miles}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        AIRCRAFT
+                    </f:facet>
+                    <h:panelGroup rendered="#{!vueloBean.esVueloAEditar(vuelo)}" >
+                        #{vuelo.aircraft}  
+                    </h:panelGroup>
+                    <h:inputText rendered="#{vueloBean.esVueloAEditar(vuelo)}" value="#{vueloBean.vuelo.aircraft}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        BORRAR
+                    </f:facet>
+                    <h:commandButton rendered="#{!vueloBean.esVueloAEditar(vuelo)}" value="Borrar" action="#{vueloBean.doBorrar(vuelo)}">
+                        <f:ajax render="@form"/>
+                    </h:commandButton>
+                    <h:commandButton rendered="#{vueloBean.esVueloAEditar(vuelo)}" value="Guardar" action="#{modificarVueloBean.doGuardar()}">
+                        <f:ajax execute="@form" render="@form"/>
+                    </h:commandButton>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        EDITAR
+                    </f:facet>
+                    <h:commandButton rendered="#{!vueloBean.esVueloAEditar(vuelo)}" value="Editar" action="#{modificarVueloBean.doEditar(vuelo)}">
+                        <f:ajax render="@form"/>
+                    </h:commandButton>
+                    <h:commandButton rendered="#{vueloBean.esVueloAEditar(vuelo)}" value="Cancelar" action="#{vueloBean.doCancelarEditar()}">
+                        <f:ajax render="@form"/>
+                    </h:commandButton>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

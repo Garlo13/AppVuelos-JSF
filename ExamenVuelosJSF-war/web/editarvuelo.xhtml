@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            FLIGHT ID: #{vueloBean.vuelo.flightPK.flightId}<br/>
+            SEGMENT NUMBER: #{vueloBean.vuelo.flightPK.segmentNumber}<br/>
+            Aeropuerto de origen: <h:selectOneMenu value="#{vueloBean.ciudadOrigenSeleccionada}">
+                <f:selectItems value="#{vueloBean.listaCiudades}" var="ciudad"
+                               itemValue="#{ciudad.airport}" itemLabel="#{ciudad.cityName}"/>
+            </h:selectOneMenu><br/>
+            Hora de salida: <h:inputText p:type="time" value="#{vueloBean.vuelo.departTime}">
+                <f:convertDateTime type="time" pattern="HH:mm"/>
+            </h:inputText><br/>
+            Aeropuerto de Destino: <h:selectOneMenu value="#{vueloBean.ciudadDestinoSeleccionada}">
+                <f:selectItems value="#{vueloBean.listaCiudades}" var="ciudad"
+                               itemValue="#{ciudad.airport}" itemLabel="#{ciudad.cityName}"/>
+            </h:selectOneMenu><br/>
+            Hora de Llegada <h:inputText p:type="time" value="#{vueloBean.vuelo.arriveTime}">
+                <f:convertDateTime type="time" pattern="HH:mm"/>
+            </h:inputText><br/>
+            Meal: <h:selectOneMenu value="#{vueloBean.vuelo.meal}">
+                <f:selectItem itemValue='S' itemLabel="S"/>
+                <f:selectItem itemValue='B' itemLabel="B"/>
+                <f:selectItem itemValue='L' itemLabel="L"/>
+                <f:selectItem itemValue='D' itemLabel="D"/>
+            </h:selectOneMenu><br/>
+            Flying Time: <h:inputText value="#{vueloBean.vuelo.flyingTime}"/><br/>
+            Miles: <h:inputText value="#{vueloBean.vuelo.miles}"/><br/>
+            Aircraft: <h:inputText value="#{vueloBean.vuelo.aircraft}"/><br/>
+            <h:commandButton value="Guardar" action="#{vueloBean.doGuardar()}"/>
+        </h:form>
+    </h:body>
+</html>
+
